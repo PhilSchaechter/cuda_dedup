@@ -1,0 +1,40 @@
+The index is a hash table, with an initial allocation of X bytes.  These X bytes are removed from the start of the head before storage
+
+Need a data structure for memory index nodes: leaf nodes (no next pointer) and non-leaf nodes (with next pointer)
+We also need a structure for each of the above when it's been loaded into memory (will be longer and have the pointer to the data)
+
+example of loaded non-leaf node (the largest option)
+typedef struct node {
+	unsigned char hash[MD5_DIGEST_LENGTH]; // will be length -X of index size
+	CUNION flags; 	
+	struct node *next; // pointer to next hash in list (should be sorted on the way down)
+	unsigned int weight; // probably should be 16-bit
+	unsigned int orig_size; // probably should be 16-bit
+	unsigned in box_id; // probably should be 32 bit
+	char *slice_data;
+} slice_nonleaf_loaded_m; // slice in memory
+
+typedef union {
+	unsigned char b;
+	CFLAGS bits;
+} CUNION;
+
+flags, same for all node types: 
+typedef struct {
+	unsigned int inmemory:1;
+	unsigned int ondisk:1;
+	unsigned int oncloud:1;
+	unsigned int deleted:1; // do we need this?  Maybe if it's deleted it's just gone.
+	unsigned int c1:1; // 00 no compression 01 lz
+	unsigned int c2:1; // 10 gz             11 mz
+	unsigned int leaf:1; // used to mark if the node is a leaf node or not
+	unsigned int recompressed:1; // if the slice has undergone recompression
+} CFLAGS;
+
+"Make a type system. Put everything you pass into a structure, make the first byte or two a magic number to determine what the structure contains beyond the magic number.
+
+Make some functions to create/get/set/destroy the "typed variables".
+
+Make some other functions to add and register new types at runtime.
+
+Create a few defines to make it easier to read and typecast the structs."

@@ -1,0 +1,23 @@
+The packer packs slices into boxes, and stores them back to disk
+
+packer start:
+scan the box headers of the entire disk, and understand which boxes are allocated and which are not.  
+
+packer rescan:
+rescan the box headers of allocated boxes and build the index
+
+packer load box:
+loads an unallocated box into NVmemory, marking it as loaded
+
+packer store box: 
+write box out to disk
+
+Packer add slice:
+accept a slice into queue for packing.   Slices are stored in a sorted singly-linked list
+
+The packer thread itself scans the linked list trying to "fill up" its memory boxes.  If it has no memory boxes 
+which can fit the list, it will load/allocated a new one, then it can scan down the list to fill it up as full as possible
+
+OPEN ISSUE: i
+1) when to commit a slice as saved?  When to ack to client?  When in list, or when in box?  
+2) When to add to index?  When in list, or when in box?

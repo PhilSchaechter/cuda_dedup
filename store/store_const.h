@@ -1,0 +1,10 @@
+#ifndef STORE_CONST_H
+#define STORE_CONST_H
+
+#define STORE_BLOCK_SIZE 4096
+#define STORE_STRIPE_SIZE 61440
+#define STORE_BOX_SIZE 6144000
+#define STORE_MAX_BOXES 170
+#define HASH_SIZE 16
+
+#endif
