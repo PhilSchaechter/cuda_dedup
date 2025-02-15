@@ -1,2 +1,6 @@
 # cuda_dedup
 My attempt at a GPU-based deduplication algorithm + raw storage system
+
+The storage system is multi-threaded, maintain an index of already found segments and storing each unique segment once.  It stores in a
+raw filesystem device, in an append-only log format.   There are both cude and non-cuda versions of the system here, but I realized due
+to restrictions in cuda and memory alignment, running it on a GPU is not more efficient than on the CPU (for now!) 
